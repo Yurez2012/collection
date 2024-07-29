@@ -1,0 +1,60 @@
+{
+  "expo": {
+    "name": "Sample Grade",
+    "slug": "sample-grade",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yurez2012.samplegrade"
+    },
+    "android": {
+      "package": "com.yurez2012.samplegrade",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "2a47411a-9732-49be-9e2d-5adc8992ef1d"
+      }
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "react-native-fbsdk-next",
+        {
+          "appID": "1059573258871755",
+          "clientToken": "c40c7e114f6a5ae2a4a3a880b3cfd022",
+          "displayName": "SampleGrade",
+          "scheme": "fb1059573258871755",
+          "advertiserIDCollectionEnabled": false,
+          "autoLogAppEventsEnabled": true,
+          "isAutoInitEnabled": true,
+          "iosUserTrackingPermission": "This identifier will be used to deliver personalized ads to you."
+        }
+      ],
+      "expo-tracking-transparency"
+    ]
+  }
+}
