@@ -1,91 +1,85 @@
 
-import {View, Image, StyleSheet} from "react-native";
+import {View, Text, Image, StyleSheet, Button, Pressable} from "react-native";
 import React, {useEffect, useState} from "react";
-import Colors from '@/constants/Colors';
-import {router, Stack} from "expo-router";
-import UserHistory from "@/components/user/UserHistory";
-import HeaderFriend from "@/components/navigation/HeaderFriend";
-import config from "@/config/app";
-import axios from "axios/index";
+import api from "@/interceptor/api";
+import {router} from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Friend = () => {
+const Profile = () => {
     const [profile, setProfile] = useState(null);
 
     useEffect(() => {
-        const postUserData = async () => {
+        const fetchData = async () => {
             try {
-                const response = await axios.post(config.url + '/login', {
-                    facebook_uuid: user.id,
-                    name: user.name,
-                    email: user.email,
-                    url: user.picture.data.url,
-                });
+                const response = await api.get('/profile');
 
-                await AsyncStorage.setItem('userToken', response.data.api_token);
-
-                router.replace('collection')
+                setProfile(response.data.data);
             } catch (error) {
-                console.error('Axios error:', error);
+                console.error('Помилка при отриманні даних', error);
             }
         };
-    }, [user]);
+
+        fetchData();
+    }, []);
+
+    const logout = async () => {
+        try {
+            await AsyncStorage.removeItem('userToken');
+
+            router.replace('/sign-in');
+        } catch (error) {
+
+        }
+    };
 
     return (
-        <>
-            <Stack.Screen options={{
-                header: () => <HeaderFriend/>
-            }}/>
-            <View style={styles.container}>
-                {data.map(item => <UserHistory
-                    key={item.id}
-                    img={item.img}
-                    username={item.username}
-                    description={item.description}
-                    created_at={item.created_at}
-                />)}
-
-            </View>
-        </>
-    )
+       <View style={styles.container}>
+           <Image style={styles.img} source={{uri: profile?.picture}}></Image>
+           <Text style={styles.name} >{profile?.name}</Text>
+           <Text style={styles.email} >{profile?.email}</Text>
+           <Pressable
+               style={styles.logout}
+               onPress={logout}>
+               <Text style={styles.text}>
+                   Logout
+               </Text>
+           </Pressable>
+       </View>
+    );
 }
 
-export default Friend
+export default Profile
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.richBlack,
-        padding: 10
+        justifyContent: "center",
+        alignItems: "center"
     },
-    tags: {
+    img: {
+        borderRadius: 35,
+        width: 70,
+        height: 70,
+        marginBottom: 10,
+    },
+    name: {
+        fontSize: 18,
+        marginBottom: 4,
+    },
+    email: {
+        fontSize: 16,
+    },
+    logout: {
         flexDirection: "row",
-        flexWrap: "wrap",
-        justifyContent: "space-between",
-        gap: 10
-    }
-})
-
-const data = [
-    {
-        id: 1,
-        img: 'https://www.shareicon.net/data/48x48/2016/08/05/806962_user_512x512.png',
-        username: 'Yura Ludchak',
-        description: '',
-        created_at: '21.07.2024',
+        padding: 10,
+        gap: 3,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: '#0866ff',
+        width: 150,
+        marginTop: 30
     },
-    {
-        id: 2,
-        img: 'https://www.shareicon.net/data/48x48/2016/08/05/806962_user_512x512.png',
-        username: 'Yura Ludchak',
-        description: '',
-        created_at: '21.07.2024',
-    },
-    {
-        id: 3,
-        img: 'https://www.shareicon.net/data/48x48/2016/08/05/806962_user_512x512.png',
-        username: 'Yura Ludchak',
-        description: '',
-        created_at: '21.07.2024',
+    text: {
+        color: '#FFFFFF'
     }
-]
+});
