@@ -27,12 +27,6 @@ export default function TabLayout() {
                     <TabBarIcon name={focused ? 'people' : 'people-outline'} color={color} />
                 ),
             }} />
-            <Tabs.Screen name='profile' options={{
-                title: 'Profile',
-                tabBarIcon: ({ color, focused }) => (
-                    <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
-                ),
-            }} />
         </Tabs>
     )
 }
@@ -45,8 +39,8 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.licorice,
         borderTopWidth: 0,
         borderWidth: 1,
-        borderColor: Colors.raisinBlack,
-        borderTopColor: Colors.raisinBlack,
+        borderColor: Colors.licorice,
+        borderTopColor: Colors.licorice,
         paddingTop: 20,
         paddingBottom: 30,
         height: 100

@@ -1,60 +1,85 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
-import { useSession } from '../ctx';
-import React, {useEffect, useState} from "react";
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from "react";
 import * as Facebook from "expo-auth-session/providers/facebook";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import {Redirect, router, Stack} from "expo-router";
+import {router, Stack} from "expo-router";
 import HeaderFriend from "@/components/navigation/HeaderFriend";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SignIn() {
-    const { signIn } = useSession();
     const [user, setUser] = useState(null);
+
     const [request, response, promptAsync] = Facebook.useAuthRequest({
         clientId: "1059573258871755"
-    })
+    });
 
-    useEffect(() => {
-        if(response && response.type === 'success' && response.authentication) {
-            (async() => {
+    const login = async () => {
+        try {
+            if (response && response.type === 'success' && response.authentication) {
                 const userInfoResponse = await fetch(
-                    `https://graph.facebook.com/v20.0/me?access_token=${response.authentication?.accessToken}&fields=id,name,picture`
+                    `https://graph.facebook.com/v20.0/me?access_token=${response.authentication?.accessToken}&fields=id,name,picture,email`
                 );
                 const userInfo = await userInfoResponse.json();
                 setUser(userInfo);
-            })();
+            }
+        } catch (error) {
+            console.error('Помилка авторизації', error);
+        }
+    };
+
+    useEffect(() => {
+        if (user) {
+            const postUserData = async () => {
+                try {
+                    const response = await axios.post('http://www.sample-api.local/api/login', {
+                        facebook_uuid: user.id,
+                        name: user.name,
+                        email: user.email,
+                        url: user.picture.data.url,
+                    });
+
+                    await AsyncStorage.setItem('userToken', response.data.api_token);
+
+                    router.replace('collection')
+                } catch (error) {
+                    console.error('Axios error:', error);
+                }
+            };
+            postUserData();
+        }
+    }, [user]);
+
+    useEffect(() => {
+        if(AsyncStorage.getItem('userToken')) {
+            router.replace('collection')
+        }
+
+        if (response && response.type === 'success') {
+            login();
         }
     }, [response]);
 
     const handlePressAsync = async () => {
-        const result = await promptAsync();
-        if(result.type !== 'success') {
-            alert('something')
-            return;
-        } else {
-            console.log(123123);
-        }
+        await promptAsync();
     };
 
     return (
         <>
-        <Stack.Screen options={{
-            header: () => <HeaderFriend/>
-        }}/>
-        <View style={styles.container}>
-            {
-                user
-                    ? router.replace('collection')
-                    : <Pressable
-                        style={styles.fb_btn}
-                        title={'Login Facebook'}
-                        onPress={handlePressAsync}>
-                        <Ionicons name="logo-facebook" size={22} color="white"/>
-                        <Text style={styles.text}>
-                            Login with Facebook
-                        </Text>
-                    </Pressable>
-            }
-        </View>
+            <Stack.Screen options={{
+                header: () => <HeaderFriend />
+            }} />
+            <View style={styles.container}>
+                <Pressable
+                    style={styles.fb_btn}
+                    title={'Login Facebook'}
+                    onPress={handlePressAsync}>
+                    <Ionicons name="logo-facebook" size={22} color="white" />
+                    <Text style={styles.text}>
+                        Login with Facebook
+                    </Text>
+                </Pressable>
+            </View>
         </>
     );
 }
@@ -78,4 +103,4 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 22
     }
-})
+});
