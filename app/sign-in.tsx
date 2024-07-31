@@ -9,17 +9,24 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SignIn() {
     const [user, setUser] = useState(null);
-    const token = AsyncStorage.getItem('userToken');
 
     const [request, response, promptAsync] = Facebook.useAuthRequest({
         clientId: "1059573258871755"
     });
 
     useEffect(() => {
-        if (token != null) {
-            router.replace('collection');
-        }
+        const checkToken = async () => {
+            const token = await AsyncStorage.getItem('userToken');
+            if (token) {
+                router.replace('collection');
+            }
+        };
 
+        checkToken();
+    }, []); // Пустий масив залежностей для виконання лише один раз при завантаженні
+
+
+    useEffect(() => {
         if (response && response.type === 'success' && response.authentication) {
             login();
         }
