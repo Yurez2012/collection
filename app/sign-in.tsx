@@ -6,6 +6,7 @@ import {router, Stack} from "expo-router";
 import HeaderFriend from "@/components/navigation/HeaderFriend";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import config from "@/config/app";
 
 export default function SignIn() {
     const [user, setUser] = useState(null);
@@ -32,7 +33,7 @@ export default function SignIn() {
         if (user) {
             const postUserData = async () => {
                 try {
-                    const response = await axios.post('http://www.sample-api.local/api/login', {
+                    const response = await axios.post(config.url + '/login', {
                         facebook_uuid: user.id,
                         name: user.name,
                         email: user.email,
