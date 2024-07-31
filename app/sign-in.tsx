@@ -6,12 +6,13 @@ import {router, Stack} from "expo-router";
 import HeaderFriend from "@/components/navigation/HeaderFriend";
 import api from "@/interceptor/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import config from "@/config/app";
 
 export default function SignIn() {
     const [user, setUser] = useState(null);
 
     const [request, response, promptAsync] = Facebook.useAuthRequest({
-        clientId: "1059573258871755"
+        clientId: config.bf_client_id
     });
 
     useEffect(() => {
@@ -23,14 +24,14 @@ export default function SignIn() {
         };
 
         checkToken();
-    }, []); // Пустий масив залежностей для виконання лише один раз при завантаженні
+    }, []);
 
 
     useEffect(() => {
         if (response && response.type === 'success' && response.authentication) {
             login();
         }
-    }, [response]); // Відстежуємо response, а не user
+    }, [response]);
 
     const login = async () => {
         try {
