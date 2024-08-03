@@ -1,4 +1,4 @@
-import {View, Image, StyleSheet, ScrollView, Text} from "react-native";
+import {View, Image, StyleSheet, ScrollView, Text, Pressable} from "react-native";
 import React from "react";
 import Colors from '@/constants/Colors';
 import {Stack} from "expo-router";
@@ -12,9 +12,22 @@ const Collection = () => {
                 header: () => <HeaderFriend/>
             }}/>
             <ScrollView>
+                <View style={styles.header}>
+                    <View style={styles.headline_right}>
+                        <Ionicons name="book-outline" size={18} color={Colors.ash_gray}/>
+                        <Text style={styles.header_button_title}>
+                            Collection
+                        </Text>
+                    </View>
+                    <Pressable style={styles.header_button}>
+                        <Text style={styles.header_button_text}>
+                            Add Collection
+                        </Text>
+                    </Pressable>
+                </View>
                 <View style={styles.headline}>
                     <View style={styles.headline_left}>
-                        <Ionicons name="book-outline" size={18} color="orange"/>
+                        <Ionicons name="book-outline" size={18} color={Colors.ash_gray}/>
                         <Text style={styles.headline_left_title}>Books</Text>
                     </View>
                     <View style={styles.headline_right}>
@@ -63,7 +76,7 @@ const Collection = () => {
 
                 <View style={styles.headline}>
                     <View style={styles.headline_left}>
-                        <Ionicons name="film-outline" size={18} color="orange"/>
+                        <Ionicons name="film-outline" size={18} color={Colors.ash_gray}/>
                         <Text style={styles.headline_left_title}>Films</Text>
                     </View>
                     <View style={styles.headline_right}>
@@ -120,13 +133,37 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    header: {
+        backgroundColor: Colors.platinum,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: 10,
+        borderBottomColor: Colors.ash_gray,
+        borderBottomWidth: 1
+    },
+    header_button: {
+        backgroundColor: Colors.ash_gray,
+        paddingVertical: 8,
+        paddingHorizontal: 10,
+        borderRadius: 5,
+    },
+    header_button_title: {
+        marginLeft: 5,
+        fontSize: 20,
+        color: Colors.slate_gray
+    },
+    header_button_text: {
+        color: Colors.white
+    },
     headline: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        backgroundColor: Colors.platinum,
+        backgroundColor: Colors.slate_gray,
         paddingLeft: 10,
-        paddingRight: 10
+        paddingRight: 10,
+        paddingTop: 10
     },
     headline_left: {
         flexDirection: "row",
@@ -136,6 +173,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
         marginLeft: 5,
+        color: Colors.ash_gray
     },
     headline_right: {
         flexDirection: "row",
@@ -147,7 +185,7 @@ const styles = StyleSheet.create({
     scrollCustom: {
         flexDirection: "row",
         padding: 10,
-        backgroundColor: Colors.platinum,
+        backgroundColor: Colors.slate_gray,
     },
     cart_collection: {
         marginRight: 10
@@ -159,9 +197,11 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: "bold",
         marginBottom: 4,
+        color: Colors.ash_gray
     },
     cart_content_description: {
         fontSize: 10,
+        color: Colors.french_gray
     },
     img: {
         borderRadius: 25,
