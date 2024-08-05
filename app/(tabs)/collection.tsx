@@ -1,11 +1,30 @@
 import {View, Image, StyleSheet, ScrollView, Text, Pressable} from "react-native";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Colors from '@/constants/Colors';
 import {router, Stack} from "expo-router";
 import HeaderFriend from "@/components/navigation/HeaderFriend";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import api from "@/interceptor/api";
+import UserHistory from "@/components/user/UserHistory";
 
 const Collection = () => {
+    const [collections, setCollections] = useState(null);
+
+    useEffect(() => {
+        if (collections === null) {
+            getCollections();
+        }
+    }, [collections]);
+
+    const getCollections = async () => {
+        try {
+            const response = await api.get('/collection');
+            console.log(response.data.collections);
+            setCollections(response.data.collections)
+        } catch (error) {
+            console.error('Axios error:', error);
+        }
+    };
 
     const handlePressAsync = async () => {
         router.replace('collection/store');
@@ -16,24 +35,25 @@ const Collection = () => {
             <Stack.Screen options={{
                 header: () => <HeaderFriend/>
             }}/>
-            <ScrollView>
-                <View style={styles.header}>
-                    <View style={styles.headline_right}>
-                        <Ionicons name="book-outline" size={18} color={Colors.ash_gray}/>
-                        <Text style={styles.header_button_title}>
-                            Collection
-                        </Text>
-                    </View>
-                    <Pressable style={styles.header_button}   onPress={handlePressAsync}>
-                        <Text style={styles.header_button_text}>
-                            Add Collection
-                        </Text>
-                    </Pressable>
+            <View style={styles.header}>
+                <View style={styles.headline_right}>
+                    <Ionicons name="book-outline" size={18} color={Colors.ash_gray}/>
+                    <Text style={styles.header_button_title}>
+                        Collection
+                    </Text>
                 </View>
+                <Pressable style={styles.header_button} onPress={handlePressAsync}>
+                    <Text style={styles.header_button_text}>
+                        Add Collection
+                    </Text>
+                </Pressable>
+            </View>
+
+            {collections ? collections.map(item => <ScrollView key={item.title}>
                 <View style={styles.headline}>
                     <View style={styles.headline_left}>
                         <Ionicons name="book-outline" size={18} color={Colors.ash_gray}/>
-                        <Text style={styles.headline_left_title}>Books</Text>
+                        <Text style={styles.headline_left_title}>{item.title}</Text>
                     </View>
                     <View style={styles.headline_right}>
                         <Ionicons style={styles.headline_right_title} name="arrow-back-outline" size={22}
@@ -43,91 +63,26 @@ const Collection = () => {
                 </View>
                 <View style={styles.container}>
                     <ScrollView horizontal={true} style={styles.scrollCustom} showsHorizontalScrollIndicator={false}>
-                        <View style={styles.cart_collection}>
+                        { item.collections.map(item => <View style={styles.cart_collection}>
                             <Image
                                 style={styles.img}
                                 source={{
-                                    uri: 'https://upload.wikimedia.org/wikipedia/uk/thumb/b/b2/Stephen_King_Christine_%282017%2C_UKR%2C_KSD%29.jpg/250px-Stephen_King_Christine_%282017%2C_UKR%2C_KSD%29.jpg',
+                                    uri: 'http://books.google.com/books/content?id=4uTnEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_apir',
                                 }}
                             />
                             <View style={styles.cart_content}>
                                 <Text style={styles.cart_content_title}>
-                                    Title
+                                    {item.model.title}
                                 </Text>
                                 <Text style={styles.cart_content_description}>
-                                    Description
+                                    {item.model.description}
                                 </Text>
                             </View>
                         </View>
-
-                        <View style={styles.cart_collection}>
-                            <Image
-                                style={styles.img}
-                                source={{
-                                    uri: 'https://static.yakaboo.ua/media/catalog/product/i/m/img014_5_98.jpg',
-                                }}
-                            />
-                            <View style={styles.cart_content}>
-                                <Text style={styles.cart_content_title}>
-                                    Title
-                                </Text>
-                                <Text style={styles.cart_content_description}>
-                                    Description
-                                </Text>
-                            </View>
-                        </View>
+                        )}
                     </ScrollView>
                 </View>
-
-                <View style={styles.headline}>
-                    <View style={styles.headline_left}>
-                        <Ionicons name="film-outline" size={18} color={Colors.ash_gray}/>
-                        <Text style={styles.headline_left_title}>Films</Text>
-                    </View>
-                    <View style={styles.headline_right}>
-                        <Ionicons style={styles.headline_right_title} name="arrow-back-outline" size={22}
-                                  color="silver"/>
-                        <Ionicons name="arrow-forward-outline" size={22} color="silver"/>
-                    </View>
-                </View>
-                <View style={styles.container}>
-                    <ScrollView horizontal={true} style={styles.scrollCustom} showsHorizontalScrollIndicator={false}>
-                        <View style={styles.cart_collection}>
-                            <Image
-                                style={styles.img}
-                                source={{
-                                    uri: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1629390/8ab9a119-dd74-44f0-baec-0629797483d7/220x330',
-                                }}
-                            />
-                            <View style={styles.cart_content}>
-                                <Text style={styles.cart_content_title}>
-                                    Title
-                                </Text>
-                                <Text style={styles.cart_content_description}>
-                                    Description
-                                </Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.cart_collection}>
-                            <Image
-                                style={styles.img}
-                                source={{
-                                    uri: 'https://upload.wikimedia.org/wikipedia/ru/b/b2/Deadpool_film.jpg',
-                                }}
-                            />
-                            <View style={styles.cart_content}>
-                                <Text style={styles.cart_content_title}>
-                                    Title
-                                </Text>
-                                <Text style={styles.cart_content_description}>
-                                    Description
-                                </Text>
-                            </View>
-                        </View>
-                    </ScrollView>
-                </View>
-            </ScrollView>
+            </ScrollView>) : null}
         </>
     )
 }
