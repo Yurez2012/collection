@@ -1,11 +1,16 @@
 import {View, Image, StyleSheet, ScrollView, Text, Pressable} from "react-native";
 import React from "react";
 import Colors from '@/constants/Colors';
-import {Stack} from "expo-router";
+import {router, Stack} from "expo-router";
 import HeaderFriend from "@/components/navigation/HeaderFriend";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 const Collection = () => {
+
+    const handlePressAsync = async () => {
+        router.replace('collection/store');
+    };
+
     return (
         <>
             <Stack.Screen options={{
@@ -19,7 +24,7 @@ const Collection = () => {
                             Collection
                         </Text>
                     </View>
-                    <Pressable style={styles.header_button}>
+                    <Pressable style={styles.header_button}   onPress={handlePressAsync}>
                         <Text style={styles.header_button_text}>
                             Add Collection
                         </Text>
