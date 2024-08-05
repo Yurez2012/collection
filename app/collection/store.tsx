@@ -1,13 +1,15 @@
-import {FlatList, TextInput, View} from "react-native";
-import {Picker} from "@react-native-picker/picker";
+import {FlatList, StyleSheet, TextInput, View} from "react-native";
 import React, {useEffect, useRef, useState} from "react";
 import api from "@/interceptor/api";
 import {SelectList} from "react-native-dropdown-select-list";
+import Colors from "@/constants/Colors";
 
 export default function Store() {
     const [categories, setCategories] = useState(null);
+    const [books, setBooks] = useState(null);
     const [selectCategory, setSelectCategory] = useState();
-    const [text, setSelectTitle] = React.useState('Useless Text');
+    const [selectBook, setSelectBook] = useState();
+    const [searchBook, setSearchBook] = useState();
 
     useEffect(() => {
         if (categories === null) {
@@ -25,38 +27,67 @@ export default function Store() {
         }
     };
 
-    const [selected, setSelected] = React.useState("");
+    const searchBookFunc = async (val) => {
+        try {
+            const response = await api.get('/book_search?author='+val);
 
-    const data = [
-        {key:'1', value:'Mobiles', disabled:true},
-        {key:'2', value:'Appliances'},
-        {key:'3', value:'Cameras'},
-        {key:'4', value:'Computers', disabled:true},
-        {key:'5', value:'Vegetables'},
-        {key:'6', value:'Diary Products'},
-        {key:'7', value:'Drinks'},
-    ]
+            setBooks(response.data.books)
+        } catch (error) {
+            console.error('Axios error:', error);
+        }
+    };
+
+    const search = async (val) => {
+        setSearchBook(val);
+        await searchBookFunc(val);
+    }
 
     return (
-        <View>
-            <Picker
-                selectedValue={selectCategory}
-                onValueChange={(itemValue, itemIndex) =>
-                    setSelectCategory(itemValue)
-                }
-                mode={"dialog"}
-            >
-                {
-                    categories ? categories.map((category, index) => {
-                        return (<Picker.Item label={category.title} value={category.id} key={category.id} />);
-                    }) : null
-                }
-            </Picker>
+        <View style={styles.container}>
             <SelectList
-                setSelected={(val) => setSelected(val)}
-                data={data}
+                boxStyles={styles.select}
+                setSelected={(val) => setSelectCategory(val)}
+                data={categories ? categories : null}
                 save="value"
             />
+            {selectCategory && selectCategory == 'Book' ? (
+                <TextInput
+                    style={styles.searchInput}
+                    placeholderTextColor={Colors.licorice}
+                    placeholder="Search book..."
+                    onChangeText={(val) => {
+                        search(val);
+                    }}
+                />
+            ) : ''}
+            {selectCategory && selectCategory == 'Book' && searchBook && searchBook != '' ? (
+                <SelectList
+                    boxStyles={styles.select}
+                    data={books ? books : null}
+                    setSelected={(val) => setSelectBook(val)}
+                    save="value"
+                    search={false}
+                />
+            ) : ''}
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 10,
+    },
+    select: {
+        marginBottom: 5
+    },
+    searchInput: {
+        paddingLeft: 20,
+        height: 45,
+        borderColor: Colors.licorice,
+        borderWidth: 1,
+        paddingHorizontal: 10,
+        marginBottom: 5,
+        borderRadius: 10
+    },
+});
