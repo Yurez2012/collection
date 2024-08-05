@@ -1,8 +1,9 @@
-import {FlatList, StyleSheet, TextInput, View} from "react-native";
-import React, {useEffect, useRef, useState} from "react";
+import {Pressable, StyleSheet, Text, TextInput, View} from "react-native";
+import React, {useEffect, useState} from "react";
 import api from "@/interceptor/api";
 import {SelectList} from "react-native-dropdown-select-list";
 import Colors from "@/constants/Colors";
+import {router} from "expo-router";
 
 export default function Store() {
     const [categories, setCategories] = useState(null);
@@ -29,7 +30,7 @@ export default function Store() {
 
     const searchBookFunc = async (val) => {
         try {
-            const response = await api.get('/book_search?author='+val);
+            const response = await api.get('/book_search?author=' + val);
 
             setBooks(response.data.books)
         } catch (error) {
@@ -41,6 +42,20 @@ export default function Store() {
         setSearchBook(val);
         await searchBookFunc(val);
     }
+
+    const sent = async () => {
+        try {
+            const response = await api.post('/collection', {
+                model_type: selectCategory,
+                model_id: selectBook
+            });
+
+            router.replace('collection');
+        } catch (error) {
+            console.error('Axios error:', error);
+        }
+    };
+
 
     return (
         <View style={styles.container}>
@@ -60,15 +75,21 @@ export default function Store() {
                     }}
                 />
             ) : ''}
-            {selectCategory && selectCategory == 'Book' && searchBook && searchBook != '' ? (
+            {selectCategory && selectCategory == 'Book' && books && books.length > 0 ? (
                 <SelectList
                     boxStyles={styles.select}
                     data={books ? books : null}
                     setSelected={(val) => setSelectBook(val)}
-                    save="value"
+                    save="key"
                     search={false}
                 />
             ) : ''}
+
+            <Pressable onPress={sent}>
+                <Text>
+                    Sent
+                </Text>
+            </Pressable>
         </View>
     );
 }

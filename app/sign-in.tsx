@@ -39,7 +39,7 @@ export default function SignIn() {
                 `https://graph.facebook.com/v20.0/me?access_token=${response.authentication?.accessToken}&fields=id,name,picture,email`
             );
             const userInfo = await userInfoResponse.json();
-            console.log('User info received from Facebook:', userInfo);
+
             setUser(userInfo);
         } catch (error) {
             console.error('Помилка авторизації', error);

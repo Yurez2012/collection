@@ -357,7 +357,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q9FTY55W87;
+				DEVELOPMENT_TEAM = AM839RR78V;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -376,7 +376,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yurez2012.samplegrade;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yurez2013.samplegrade;
 				PRODUCT_NAME = SampleGrade;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SampleGrade/SampleGrade-Bridging-Header.h";
@@ -397,7 +397,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q9FTY55W87;
+				DEVELOPMENT_TEAM = AM839RR78V;
 				INFOPLIST_FILE = SampleGrade/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -411,7 +411,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yurez2012.samplegrade;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yurez2013.samplegrade;
 				PRODUCT_NAME = SampleGrade;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SampleGrade/SampleGrade-Bridging-Header.h";
