@@ -63,11 +63,11 @@ const Collection = () => {
                 </View>
                 <View style={styles.container}>
                     <ScrollView horizontal={true} style={styles.scrollCustom} showsHorizontalScrollIndicator={false}>
-                        { item.collections.map(item => <View style={styles.cart_collection}>
+                        { item?.collections.map(item => <View style={styles.cart_collection} key={item.model.id}>
                             <Image
                                 style={styles.img}
                                 source={{
-                                    uri: 'http://books.google.com/books/content?id=4uTnEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_apir',
+                                    uri: item.model.url,
                                 }}
                             />
                             <View style={styles.cart_content}>
@@ -75,7 +75,9 @@ const Collection = () => {
                                     {item.model.title}
                                 </Text>
                                 <Text style={styles.cart_content_description}>
-                                    {item.model.description}
+                                    {item.model.description.length < 35
+                                        ? `${item.model.description}`
+                                        : `${item.model.description.substring(0, 35)}...`}
                                 </Text>
                             </View>
                         </View>
