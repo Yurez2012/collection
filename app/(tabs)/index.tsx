@@ -90,6 +90,13 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.ash_gray,
         borderRadius: 25,
         padding: 10,
+        shadowColor: Colors.licorice,
+        shadowOpacity: 1,
+        shadowRadius: 4,
+        shadowOffset: {
+            width: 1,
+            height: 4,
+        },
     },
     cart_content: {
         flexWrap: "wrap",

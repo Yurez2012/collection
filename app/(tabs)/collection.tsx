@@ -38,7 +38,7 @@ const Collection = () => {
             <View style={styles.container}>
                 <View style={styles.header}>
                     <View style={styles.headline_right}>
-                        <Ionicons name="library-outline" size={18} color={Colors.ash_gray}/>
+                        <Ionicons name="library-outline" size={18} color={Colors.licorice}/>
                         <Text style={styles.header_button_title}>
                             Collection
                         </Text>
@@ -53,13 +53,13 @@ const Collection = () => {
                 {collections ? collections.map(item => <ScrollView key={item.title}>
                     <View style={styles.headline}>
                         <View style={styles.headline_left}>
-                            <Ionicons name="book-outline" size={18} color={Colors.ash_gray}/>
+                            <Ionicons name="book-outline" size={18} color={Colors.licorice}/>
                             <Text style={styles.headline_left_title}>{item.title}</Text>
                         </View>
                         <View style={styles.headline_right}>
                             <Ionicons style={styles.headline_right_title} name="arrow-back-outline" size={22}
-                                      color="silver"/>
-                            <Ionicons name="arrow-forward-outline" size={22} color="silver"/>
+                                      color={Colors.licorice}/>
+                            <Ionicons name="arrow-forward-outline" size={22} color={Colors.licorice}/>
                         </View>
                     </View>
                     <View>
@@ -105,8 +105,14 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         padding: 10,
-        borderBottomColor: Colors.ash_gray,
+        borderBottomColor: Colors.licorice,
         borderBottomWidth: 1
+    },
+    header_button_title: {
+        fontSize: 16,
+        fontWeight: "bold",
+        marginLeft: 5,
+        color: Colors.licorice
     },
     btn: {
         justifyContent: "center",
@@ -121,12 +127,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: Colors.ash_gray,
         textAlign: "center"
-    },
-    header_button_title: {
-        fontSize: 16,
-        fontWeight: "bold",
-        marginLeft: 5,
-        color: Colors.ash_gray
     },
     header_button_text: {
         color: Colors.slate_gray
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
         marginLeft: 5,
-        color: Colors.ash_gray
+        color: Colors.licorice
     },
     headline_right: {
         flexDirection: "row",
@@ -166,10 +166,10 @@ const styles = StyleSheet.create({
         marginRight: 0,
         shadowColor: Colors.licorice,
         shadowOpacity: 1,
-        shadowRadius: 8,
+        shadowRadius: 10,
         shadowOffset: {
-            width: 15,
-            height: 15,
+            width: 4,
+            height: 6,
         },
     },
     cart_content: {
@@ -179,11 +179,11 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: "bold",
         marginBottom: 4,
-        color: Colors.ash_gray,
+        color: Colors.licorice,
     },
     cart_content_description: {
         fontSize: 10,
-        color: Colors.french_gray,
+        color: Colors.licorice,
     },
     img: {
         borderRadius: 25,
