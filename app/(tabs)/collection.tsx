@@ -19,7 +19,7 @@ const Collection = () => {
     const getCollections = async () => {
         try {
             const response = await api.get('/collection');
-            console.log(response.data.collections);
+
             setCollections(response.data.collections)
         } catch (error) {
             console.error('Axios error:', error);

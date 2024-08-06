@@ -14,7 +14,7 @@ export default HeaderFriend
 
 const styles = StyleSheet.create({
     bg: {
-        backgroundColor: Colors.platinum,
+        backgroundColor: Colors.slate_gray,
     },
     header: {
         flexDirection: "row",
@@ -22,8 +22,7 @@ const styles = StyleSheet.create({
         overflow: "hidden",
     },
     badge: {
-        backgroundColor: Colors.raisinBlack,
-        color: Colors.indianRed,
+        backgroundColor: Colors.slate_gray,
         paddingHorizontal: 15,
         paddingVertical: 5,
         borderWidth: 1,

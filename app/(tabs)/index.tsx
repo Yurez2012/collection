@@ -1,91 +1,76 @@
 import {View, Image, StyleSheet, ScrollView, Text} from "react-native";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Colors from '@/constants/Colors';
 import {Stack} from "expo-router";
 import HeaderFriend from "@/components/navigation/HeaderFriend";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import api from "@/interceptor/api";
 
 const Page = () => {
+    const [collections, setCollections] = useState(null);
+
+    useEffect(() => {
+        if (collections === null) {
+            getCollections();
+        }
+    }, [collections]);
+
+    const getCollections = async () => {
+        try {
+            const response = await api.get('/home');
+
+            setCollections(response.data.collections)
+        } catch (error) {
+            console.error('Axios error:', error);
+        }
+    };
+
     return (
         <>
             <Stack.Screen options={{
                 header: () => <HeaderFriend/>
             }}/>
             <ScrollView>
-                <View style={styles.container}>
+                {collections ? collections.map(item => <View style={styles.container} key={item.id}>
                     <View style={styles.cart}>
                         <Image
                             style={styles.img}
                             source={{
-                                uri: 'https://static.yakaboo.ua/media/catalog/product/i/m/img014_5_98.jpg',
+                                uri: item?.model?.url,
                             }}
                         />
-                        <View>
-                            <Text style={styles.collection_title}>
-                                Стівен Кінг - Воно
-                            </Text>
-                        </View>
-                        <View style={styles.cart_content}>
-                            <Image
-                                width={36}
-                                height={36}
-                                source={{
-                                    uri: 'https://www.shareicon.net/data/48x48/2016/08/05/806962_user_512x512.png',
-                                }}
-                            />
-                            <View style={styles.cart_content_title}>
-                                <View style={styles.cart_content_description}>
+                        <View style={styles.second}>
+                            <View style={styles.cart_content}>
+                                <Text style={styles.collection_title}>
+                                    {item?.model?.title}
+                                </Text>
+                                <Text style={styles.collection_description}>
+                                    {item.model.description.length < 300
+                                        ? `${item.model.description}`
+                                        : `${item.model.description.substring(0, 300)}...`}
+                                </Text>
+                            </View>
+                            <View style={styles.user}>
+                                <View>
                                     <Text style={styles.cart_content_user}>
-                                        Yura Ludchak
+                                        {item?.user?.name}
                                     </Text>
                                     <Text style={styles.cart_content_creator}>
-                                        In progress
+                                        {item?.created_at}
                                     </Text>
                                 </View>
-                                <Text>
-                                    <Ionicons name="heart-outline" size={28} color="silver"  />
-                                </Text>
+                                <Image
+                                    style={styles.user_img}
+                                    width={36}
+                                    height={36}
+                                    source={{
+                                        uri: item?.user?.url,
+                                    }}
+                                />
                             </View>
                         </View>
                     </View>
-                </View>
-                <View style={styles.container}>
-                    <View style={styles.cart}>
-                        <Image
-                            style={styles.img}
-                            source={{
-                                uri: 'https://static.yakaboo.ua/media/catalog/product/i/m/img014_5_98.jpg',
-                            }}
-                        />
-                        <View>
-                            <Text style={styles.collection_title}>
-                                Стівен Кінг - Воно
-                            </Text>
-                        </View>
-                        <View style={styles.cart_content}>
-                            <Image
-                                width={36}
-                                height={36}
-                                source={{
-                                    uri: 'https://www.shareicon.net/data/48x48/2016/08/05/806962_user_512x512.png',
-                                }}
-                            />
-                            <View style={styles.cart_content_title}>
-                                <View style={styles.cart_content_description}>
-                                    <Text style={styles.cart_content_user}>
-                                        Yura Ludchak
-                                    </Text>
-                                    <Text style={styles.cart_content_creator}>
-                                        In progress
-                                    </Text>
-                                </View>
-                                <Text>
-                                    <Ionicons name="heart-outline" size={28} color="silver"  />
-                                </Text>
-                            </View>
-                        </View>
-                    </View>
-                </View>
+                </View>) : null}
             </ScrollView>
         </>
     )
@@ -97,24 +82,23 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 10,
-        backgroundColor: Colors.platinum,
+        backgroundColor: Colors.slate_gray,
     },
     cart: {
+        flexDirection: "row",
+        gap: 5,
         backgroundColor: Colors.white,
         borderRadius: 25,
         padding: 10,
     },
     cart_content: {
-        flexDirection: "row",
+        flexWrap: "wrap",
     },
     cart_content_title: {
         flex: 1,
         alignItems: "center",
         flexDirection: "row",
         justifyContent: "space-between"
-    },
-    cart_content_description: {
-        paddingLeft: 5
     },
     cart_content_user: {
         fontSize: 12,
@@ -124,13 +108,33 @@ const styles = StyleSheet.create({
         fontSize: 10,
     },
     collection_title: {
-        fontSize: 18,
-        marginTop: 5,
-        marginBottom: 5
+        width: 140,
+        fontSize: 14,
+        marginBottom: 10
+    },
+    collection_description: {
+        width: 140,
+        fontSize: 11,
+        marginBottom: 10
+    },
+    second: {
+        flexDirection: "column",
+        justifyContent: "space-between",
+        flexWrap: "wrap",
+        padding: 5
+    },
+    user: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
     },
     img: {
         borderRadius: 25,
-        height: 500,
+        height: 300,
+        width: 205,
         resizeMode: 'stretch',
-    }
+    },
+    user_img: {
+        borderRadius: 25,
+    },
 })
