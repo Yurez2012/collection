@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     cart: {
         flexDirection: "row",
         gap: 5,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.ash_gray,
         borderRadius: 25,
         padding: 10,
     },
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     img: {
-        borderRadius: 25,
+        borderRadius: 20,
         height: 300,
         width: 205,
         resizeMode: 'stretch',

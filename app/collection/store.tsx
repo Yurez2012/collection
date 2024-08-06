@@ -66,6 +66,7 @@ export default function Store() {
             <View style={styles.container}>
                 <SelectList
                     boxStyles={styles.select}
+                    dropdownStyles={styles.select}
                     setSelected={(val) => setSelectCategory(val)}
                     data={categories ? categories : null}
                     save="value"
@@ -83,6 +84,7 @@ export default function Store() {
                 {selectCategory && selectCategory == 'Book' && books && books.length > 0 ? (
                     <SelectList
                         boxStyles={styles.select}
+                        dropdownStyles={styles.select}
                         data={books ? books : null}
                         setSelected={(val) => setSelectBook(val)}
                         save="key"
@@ -90,11 +92,13 @@ export default function Store() {
                     />
                 ) : ''}
 
-                <Pressable onPress={sent}>
-                    <Text>
-                        Sent
-                    </Text>
-                </Pressable>
+                <View style={styles.center}>
+                    <Pressable  style={styles.btn} onPress={sent}>
+                        <Text style={styles.btn_title}>
+                            Sent
+                        </Text>
+                    </Pressable>
+                </View>
             </View>
         </>
     );
@@ -103,18 +107,40 @@ export default function Store() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 10,
+        backgroundColor: Colors.slate_gray,
+        flexDirection: "column",
+        paddingTop: 120,
+        padding: 40
     },
     select: {
-        marginBottom: 5
+        marginBottom: 10,
+        borderColor: Colors.licorice,
+        backgroundColor: Colors.ash_gray,
+        color: Colors.licorice,
+        borderRadius: 10
     },
     searchInput: {
         paddingLeft: 20,
         height: 45,
-        borderColor: Colors.licorice,
         borderWidth: 1,
         paddingHorizontal: 10,
-        marginBottom: 5,
-        borderRadius: 10
+        marginBottom: 10,
+        borderRadius: 10,
+        borderColor: Colors.licorice,
+        backgroundColor: Colors.ash_gray,
+    },
+    btn: {
+        justifyContent: "center",
+        backgroundColor: Colors.licorice,
+        paddingVertical: 8,
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        height: 40
+    },
+    btn_title: {
+        marginLeft: 5,
+        fontSize: 20,
+        color: Colors.ash_gray,
+        textAlign: "center"
     },
 });

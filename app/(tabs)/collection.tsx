@@ -35,56 +35,59 @@ const Collection = () => {
             <Stack.Screen options={{
                 header: () => <HeaderFriend/>
             }}/>
-            <View style={styles.header}>
-                <View style={styles.headline_right}>
-                    <Ionicons name="book-outline" size={18} color={Colors.ash_gray}/>
-                    <Text style={styles.header_button_title}>
-                        Collection
-                    </Text>
-                </View>
-                <Pressable style={styles.header_button} onPress={handlePressAsync}>
-                    <Text style={styles.header_button_text}>
-                        Add Collection
-                    </Text>
-                </Pressable>
-            </View>
-
-            {collections ? collections.map(item => <ScrollView key={item.title}>
-                <View style={styles.headline}>
-                    <View style={styles.headline_left}>
-                        <Ionicons name="book-outline" size={18} color={Colors.ash_gray}/>
-                        <Text style={styles.headline_left_title}>{item.title}</Text>
-                    </View>
+            <View style={styles.container}>
+                <View style={styles.header}>
                     <View style={styles.headline_right}>
-                        <Ionicons style={styles.headline_right_title} name="arrow-back-outline" size={22}
-                                  color="silver"/>
-                        <Ionicons name="arrow-forward-outline" size={22} color="silver"/>
+                        <Ionicons name="library-outline" size={18} color={Colors.ash_gray}/>
+                        <Text style={styles.header_button_title}>
+                            Collection
+                        </Text>
                     </View>
+                    <Pressable style={styles.btn} onPress={handlePressAsync}>
+                        <Text style={styles.btn_title}>
+                            Add Collection
+                        </Text>
+                    </Pressable>
                 </View>
-                <View style={styles.container}>
-                    <ScrollView horizontal={true} style={styles.scrollCustom} showsHorizontalScrollIndicator={false}>
-                        { item?.collections.map(item => <View style={styles.cart_collection} key={item.model.id}>
-                            <Image
-                                style={styles.img}
-                                source={{
-                                    uri: item.model?.url,
-                                }}
-                            />
-                            <View style={styles.cart_content}>
-                                <Text style={styles.cart_content_title}>
-                                    {item.model.title}
-                                </Text>
-                                <Text style={styles.cart_content_description}>
-                                    {item.model.description.length < 35
-                                        ? `${item.model.description}`
-                                        : `${item.model.description.substring(0, 35)}...`}
-                                </Text>
-                            </View>
+
+                {collections ? collections.map(item => <ScrollView key={item.title}>
+                    <View style={styles.headline}>
+                        <View style={styles.headline_left}>
+                            <Ionicons name="book-outline" size={18} color={Colors.ash_gray}/>
+                            <Text style={styles.headline_left_title}>{item.title}</Text>
                         </View>
-                        )}
-                    </ScrollView>
-                </View>
-            </ScrollView>) : null}
+                        <View style={styles.headline_right}>
+                            <Ionicons style={styles.headline_right_title} name="arrow-back-outline" size={22}
+                                      color="silver"/>
+                            <Ionicons name="arrow-forward-outline" size={22} color="silver"/>
+                        </View>
+                    </View>
+                    <View>
+                        <ScrollView horizontal={true} style={styles.scrollCustom}
+                                    showsHorizontalScrollIndicator={false}>
+                            {item?.collections.map(item => <View style={styles.cart_collection} key={item.model.id}>
+                                    <Image
+                                        style={styles.img}
+                                        source={{
+                                            uri: item.model?.url,
+                                        }}
+                                    />
+                                    <View style={styles.cart_content}>
+                                        <Text style={styles.cart_content_title}>
+                                            {item.model.title}
+                                        </Text>
+                                        <Text style={styles.cart_content_description}>
+                                            {item.model.description.length < 35
+                                                ? `${item.model.description}`
+                                                : `${item.model.description.substring(0, 35)}...`}
+                                        </Text>
+                                    </View>
+                                </View>
+                            )}
+                        </ScrollView>
+                    </View>
+                </ScrollView>) : null}
+            </View>
         </>
     )
 }
@@ -94,9 +97,10 @@ export default Collection
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: Colors.slate_gray,
     },
     header: {
-        backgroundColor: Colors.platinum,
+        backgroundColor: Colors.slate_gray,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
@@ -104,19 +108,28 @@ const styles = StyleSheet.create({
         borderBottomColor: Colors.ash_gray,
         borderBottomWidth: 1
     },
-    header_button: {
-        backgroundColor: Colors.ash_gray,
-        paddingVertical: 8,
-        paddingHorizontal: 10,
-        borderRadius: 5,
+    btn: {
+        justifyContent: "center",
+        backgroundColor: Colors.licorice,
+        paddingVertical: 3,
+        paddingHorizontal: 12,
+        borderRadius: 10,
+        height: 35
+    },
+    btn_title: {
+        marginLeft: 5,
+        fontSize: 16,
+        color: Colors.ash_gray,
+        textAlign: "center"
     },
     header_button_title: {
+        fontSize: 16,
+        fontWeight: "bold",
         marginLeft: 5,
-        fontSize: 20,
-        color: Colors.slate_gray
+        color: Colors.ash_gray
     },
     header_button_text: {
-        color: Colors.white
+        color: Colors.slate_gray
     },
     headline: {
         flexDirection: "row",
@@ -150,7 +163,14 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.slate_gray,
     },
     cart_collection: {
-        marginRight: 0
+        marginRight: 0,
+        shadowColor: Colors.licorice,
+        shadowOpacity: 1,
+        shadowRadius: 8,
+        shadowOffset: {
+            width: 15,
+            height: 15,
+        },
     },
     cart_content: {
         padding: 10
@@ -159,11 +179,11 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: "bold",
         marginBottom: 4,
-        color: Colors.ash_gray
+        color: Colors.ash_gray,
     },
     cart_content_description: {
         fontSize: 10,
-        color: Colors.french_gray
+        color: Colors.french_gray,
     },
     img: {
         borderRadius: 25,
