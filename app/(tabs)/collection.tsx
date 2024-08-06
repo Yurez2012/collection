@@ -67,7 +67,7 @@ const Collection = () => {
                             <Image
                                 style={styles.img}
                                 source={{
-                                    uri: item.model.url,
+                                    uri: item.model?.url,
                                 }}
                             />
                             <View style={styles.cart_content}>
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.slate_gray,
     },
     cart_collection: {
-        marginRight: 10
+        marginRight: 0
     },
     cart_content: {
         padding: 10
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     img: {
         borderRadius: 25,
         height: 300,
-        width: 220,
+        width: 200,
         resizeMode: 'stretch',
     }
 })

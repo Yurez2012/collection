@@ -3,7 +3,8 @@ import React, {useEffect, useState} from "react";
 import api from "@/interceptor/api";
 import {SelectList} from "react-native-dropdown-select-list";
 import Colors from "@/constants/Colors";
-import {router} from "expo-router";
+import {router, Stack} from "expo-router";
+import HeaderFriend from "@/components/navigation/HeaderFriend";
 
 export default function Store() {
     const [categories, setCategories] = useState(null);
@@ -58,39 +59,44 @@ export default function Store() {
 
 
     return (
-        <View style={styles.container}>
-            <SelectList
-                boxStyles={styles.select}
-                setSelected={(val) => setSelectCategory(val)}
-                data={categories ? categories : null}
-                save="value"
-            />
-            {selectCategory && selectCategory == 'Book' ? (
-                <TextInput
-                    style={styles.searchInput}
-                    placeholderTextColor={Colors.licorice}
-                    placeholder="Search book..."
-                    onChangeText={(val) => {
-                        search(val);
-                    }}
-                />
-            ) : ''}
-            {selectCategory && selectCategory == 'Book' && books && books.length > 0 ? (
+        <>
+            <Stack.Screen options={{
+                header: () => <HeaderFriend/>
+            }}/>
+            <View style={styles.container}>
                 <SelectList
                     boxStyles={styles.select}
-                    data={books ? books : null}
-                    setSelected={(val) => setSelectBook(val)}
-                    save="key"
-                    search={false}
+                    setSelected={(val) => setSelectCategory(val)}
+                    data={categories ? categories : null}
+                    save="value"
                 />
-            ) : ''}
+                {selectCategory && selectCategory == 'Book' ? (
+                    <TextInput
+                        style={styles.searchInput}
+                        placeholderTextColor={Colors.licorice}
+                        placeholder="Search book..."
+                        onChangeText={(val) => {
+                            search(val);
+                        }}
+                    />
+                ) : ''}
+                {selectCategory && selectCategory == 'Book' && books && books.length > 0 ? (
+                    <SelectList
+                        boxStyles={styles.select}
+                        data={books ? books : null}
+                        setSelected={(val) => setSelectBook(val)}
+                        save="key"
+                        search={false}
+                    />
+                ) : ''}
 
-            <Pressable onPress={sent}>
-                <Text>
-                    Sent
-                </Text>
-            </Pressable>
-        </View>
+                <Pressable onPress={sent}>
+                    <Text>
+                        Sent
+                    </Text>
+                </Pressable>
+            </View>
+        </>
     );
 }
 
