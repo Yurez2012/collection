@@ -1,4 +1,4 @@
-import {StyleSheet, Text, SafeAreaView, View, Image, ScrollView} from "react-native";
+import {StyleSheet, Text, SafeAreaView, View, Image, ScrollView, Pressable} from "react-native";
 import React from "react";
 import Colors from "@/constants/Colors";
 
@@ -6,6 +6,7 @@ const UserHistory = (props) => {
     return (
         <View style={styles.user_history}>
             <Image
+                style={styles.img}
                 width={48}
                 height={48}
                 source={{
@@ -17,15 +18,12 @@ const UserHistory = (props) => {
                     <Text style={styles.title}>
                         {props.username}
                     </Text>
-                    <Text style={styles.description}>
-                        {props.description}
-                    </Text>
                 </View>
-                <View style={styles.date_block}>
-                    <Text style={styles.date}>
-                        {props.created_at}
+                <Pressable style={styles.btn}>
+                    <Text  style={styles.btn_title}>
+                        Show collection
                     </Text>
-                </View>
+                </Pressable>
             </View>
         </View>
     )
@@ -36,30 +34,47 @@ export default UserHistory
 const styles = StyleSheet.create({
     user_history: {
         flexDirection: "row",
-        backgroundColor: Colors.indianRed,
+        backgroundColor: Colors.slate_gray,
         padding: 10,
         borderRadius: 5,
-        marginBottom: 10
+        marginBottom: 10,
+        shadowColor: Colors.licorice,
+        shadowOpacity: 1,
+        shadowRadius: 4,
+        shadowOffset: {
+            width: 1,
+            height: 4,
+        },
     },
     content: {
         flex: 1,
         flexDirection: 'row',
+        justifyContent: "space-between",
+        alignItems: "center",
         marginLeft: 10,
     },
     title: {
         marginBottom: 3,
-        color: Colors.gunmetal
-    },
-    description: {
-        color: Colors.onyx
+        color: Colors.licorice
     },
     date_block: {
        flex: 1
     },
-    date: {
-        fontSize: 10,
-        textAlign: 'right',
-        color: Colors.onyx
-    }
+    img: {
+        borderRadius: 25,
+    },
+    btn: {
+        justifyContent: "center",
+        backgroundColor: Colors.licorice,
+        paddingVertical: 8,
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        height: 40
+    },
+    btn_title: {
+        fontSize: 20,
+        color: Colors.ash_gray,
+        textAlign: "center"
+    },
 })
 

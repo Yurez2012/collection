@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     cart: {
         flexDirection: "row",
         gap: 5,
-        backgroundColor: Colors.ash_gray,
+        backgroundColor: Colors.slate_gray,
         borderRadius: 25,
         padding: 10,
         shadowColor: Colors.licorice,

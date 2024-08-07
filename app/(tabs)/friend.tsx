@@ -1,24 +1,44 @@
-import {View, Image, StyleSheet} from "react-native";
-import React from "react";
+import {View, StyleSheet} from "react-native";
+import React, {useEffect, useState} from "react";
 import Colors from '@/constants/Colors';
 import {Stack} from "expo-router";
 import UserHistory from "@/components/user/UserHistory";
 import HeaderFriend from "@/components/navigation/HeaderFriend";
+import api from "@/interceptor/api";
 
 const Friend = () => {
+    const [friends, setFriends] = useState(null);
+
+    useEffect(() => {
+        if (friends === null) {
+            getCollections();
+        }
+    }, [friends]);
+
+    const getCollections = async () => {
+        try {
+            const response = await api.get('/friend');
+
+            setFriends(response.data.friends)
+        } catch (error) {
+            console.error('Axios error:', error);
+        }
+    };
+
+
     return (
         <>
             <Stack.Screen options={{
                 header: () => <HeaderFriend/>
             }}/>
             <View style={styles.container}>
-                {data.map(item => <UserHistory
+                {friends ? friends.map(item => <UserHistory
                     key={item.id}
-                    img={item.img}
-                    username={item.username}
+                    img={item.user.url}
+                    username={item.user.name}
                     description={item.description}
                     created_at={item.created_at}
-                />)}
+                />) : ''}
 
             </View>
         </>
@@ -30,7 +50,7 @@ export default Friend
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.richBlack,
+        backgroundColor: Colors.slate_gray,
         padding: 10
     },
     tags: {
@@ -40,27 +60,3 @@ const styles = StyleSheet.create({
         gap: 10
     }
 })
-
-const data = [
-    {
-        id: 1,
-        img: 'https://www.shareicon.net/data/48x48/2016/08/05/806962_user_512x512.png',
-        username: 'Yura Ludchak',
-        description: '',
-        created_at: '21.07.2024',
-    },
-    {
-        id: 2,
-        img: 'https://www.shareicon.net/data/48x48/2016/08/05/806962_user_512x512.png',
-        username: 'Yura Ludchak',
-        description: '',
-        created_at: '21.07.2024',
-    },
-    {
-        id: 3,
-        img: 'https://www.shareicon.net/data/48x48/2016/08/05/806962_user_512x512.png',
-        username: 'Yura Ludchak',
-        description: '',
-        created_at: '21.07.2024',
-    }
-]

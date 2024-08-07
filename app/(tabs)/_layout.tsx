@@ -21,6 +21,12 @@ export default function TabLayout() {
                     <TabBarIcon name={focused ? 'library' : 'library-outline'} color={color} />
                 ),
             }} />
+            <Tabs.Screen name='rating' options={{
+                title: 'Rating',
+                tabBarIcon: ({ color, focused }) => (
+                    <TabBarIcon name={focused ? 'star' : 'star-outline'} color={color} />
+                ),
+            }} />
             <Tabs.Screen name='friend' options={{
                 title: 'Friends',
                 tabBarIcon: ({ color, focused }) => (
