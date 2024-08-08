@@ -1,4 +1,4 @@
-package com.yurez2012.samplegrade
+package com.y.ludchak.samplegrade
 
 import android.os.Build
 import android.os.Bundle

@@ -31,7 +31,7 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="com.yurez2012.samplegrade"/>
+        <data android:scheme="com.y.ludchak.samplegrade"/>
         <data android:scheme="exp+sample-grade"/>
         <data android:scheme="myapp"/>
       </intent-filter>

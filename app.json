@@ -14,10 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.yurez2012.samplegrade"
+      "bundleIdentifier": "com.y.ludchak.samplegrade"
     },
     "android": {
-      "package": "com.yurez2012.samplegrade",
+      "package": "com.y.ludchak.samplegrade",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"

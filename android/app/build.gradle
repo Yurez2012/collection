@@ -83,9 +83,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.yurez2012.samplegrade'
+    namespace 'com.y.ludchak.samplegrade'
     defaultConfig {
-        applicationId 'com.yurez2012.samplegrade'
+        applicationId 'com.y.ludchak.samplegrade'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
