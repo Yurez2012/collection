@@ -64,6 +64,9 @@ export default function Store() {
                 header: () => <HeaderBack/>
             }}/>
             <View style={styles.container}>
+                <Text style={styles.message}>
+                    If you haven't found the book, we're sorry, we're working on it
+                </Text>
                 <SelectList
                     boxStyles={styles.select}
                     dropdownStyles={styles.select}
@@ -105,6 +108,11 @@ export default function Store() {
 }
 
 const styles = StyleSheet.create({
+    message: {
+        textAlign: "center",
+        marginBottom: 10,
+        color: Colors.ash_gray
+    },
     container: {
         flex: 1,
         backgroundColor: Colors.slate_gray,
