@@ -1,5 +1,5 @@
 import {View, Image, StyleSheet, ScrollView, Text, Pressable} from "react-native";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Colors from '@/constants/Colors';
 import {router, Stack} from "expo-router";
 import HeaderFriend from "@/components/navigation/HeaderFriend";
@@ -9,6 +9,8 @@ import UserHistory from "@/components/user/UserHistory";
 
 const Collection = () => {
     const [collections, setCollections] = useState(null);
+    const scrollRef = useRef<ScrollView>();
+    const [scrollValue, setScrollValue] = useState(300);
 
     useEffect(() => {
         if (collections === null) {
@@ -29,6 +31,22 @@ const Collection = () => {
     const handlePressAsync = async () => {
         router.replace('collection/store');
     };
+
+    const nextList = async () => {
+        await setScrollValue(scrollValue + 300);
+
+        scrollRef.current?.scrollTo({
+            x: scrollValue,
+            animated: true,
+        });
+    };
+
+    const prevList = async () => {
+        await setScrollValue(300);
+
+        scrollRef.current?.scrollTo({x: 0});
+    };
+
 
     return (
         <>
@@ -57,13 +75,12 @@ const Collection = () => {
                             <Text style={styles.headline_left_title}>{item.title}</Text>
                         </View>
                         <View style={styles.headline_right}>
-                            <Ionicons style={styles.headline_right_title} name="arrow-back-outline" size={22}
-                                      color={Colors.licorice}/>
-                            <Ionicons name="arrow-forward-outline" size={22} color={Colors.licorice}/>
+                            <Ionicons style={styles.headline_right_title} name="arrow-back-outline" size={30} color={Colors.licorice} onPress={prevList}/>
+                            <Ionicons name="arrow-forward-outline" size={30} color={Colors.licorice} onPress={nextList}/>
                         </View>
                     </View>
                     <View>
-                        <ScrollView horizontal={true} style={styles.scrollCustom}
+                        <ScrollView ref={scrollRef} horizontal={true} style={styles.scrollCustom}
                                     showsHorizontalScrollIndicator={false}>
                             {item?.collections.map(item => <View style={styles.cart_collection} key={item.model.id}>
                                     <Image
