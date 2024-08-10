@@ -4,7 +4,7 @@ import api from "@/interceptor/api";
 import {SelectList} from "react-native-dropdown-select-list";
 import Colors from "@/constants/Colors";
 import {router, Stack} from "expo-router";
-import HeaderFriend from "@/components/navigation/HeaderFriend";
+import HeaderBack from "@/components/navigation/HeaderBack";
 
 export default function Store() {
     const [categories, setCategories] = useState(null);
@@ -61,7 +61,7 @@ export default function Store() {
     return (
         <>
             <Stack.Screen options={{
-                header: () => <HeaderFriend/>
+                header: () => <HeaderBack/>
             }}/>
             <View style={styles.container}>
                 <SelectList

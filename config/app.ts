@@ -1,4 +1,4 @@
 export default {
-    url: 'http://www.sample-api.local/api/',
+    url: 'http://192.168.0.100/sample-api/public/api/',
     bf_client_id: "1059573258871755"
 };
