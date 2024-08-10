@@ -89,17 +89,17 @@ const Collection = () => {
                                     <Image
                                         style={styles.img}
                                         source={{
-                                            uri: item.model?.url,
+                                            uri: item.model?.url ? item.model?.url : null,
                                         }}
                                     />
                                     <View style={styles.cart_content}>
                                         <Text style={styles.cart_content_title}>
-                                            {item.model.title}
+                                            {item.model?.title}
                                         </Text>
                                         <Text style={styles.cart_content_description}>
-                                            {item.model.description.length < 35
-                                                ? `${item.model.description}`
-                                                : `${item.model.description.substring(0, 35)}...`}
+                                            {item.model.description.length < 30
+                                                ? `${item.model?.description}`
+                                                : `${item.model?.description.substring(0, 30)}...`}
                                         </Text>
                                     </View>
                                 </View>
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.slate_gray,
     },
     cart_collection: {
-        marginRight: 0,
+        marginRight: 10,
         shadowColor: Colors.licorice,
         shadowOpacity: 1,
         shadowRadius: 10,
@@ -206,6 +206,7 @@ const styles = StyleSheet.create({
         color: Colors.licorice,
     },
     img: {
+        backgroundColor: Colors.licorice,
         borderRadius: 25,
         height: 300,
         width: 200,
