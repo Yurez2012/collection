@@ -31,7 +31,7 @@ export default function Store() {
 
     const searchBookFunc = async (val) => {
         try {
-            const response = await api.get('/book_search?author=' + val);
+            const response = await api.get('/book_search?author="' + val + '"');
 
             setBooks(response.data.books)
         } catch (error) {
