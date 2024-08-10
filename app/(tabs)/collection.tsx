@@ -44,9 +44,12 @@ const Collection = () => {
     const prevList = async () => {
         await setScrollValue(300);
 
-        scrollRef.current?.scrollTo({x: 0});
+        scrollRef.current?.scrollTo({x: 300});
     };
 
+    const handleScroll  = async (event: Object) => {
+        await setScrollValue(event.nativeEvent.contentOffset.x);
+    };
 
     return (
         <>
@@ -80,7 +83,7 @@ const Collection = () => {
                         </View>
                     </View>
                     <View>
-                        <ScrollView ref={scrollRef} horizontal={true} style={styles.scrollCustom}
+                        <ScrollView onScroll={handleScroll} ref={scrollRef} horizontal={true} style={styles.scrollCustom}
                                     showsHorizontalScrollIndicator={false}>
                             {item?.collections.map(item => <View style={styles.cart_collection} key={item.model.id}>
                                     <Image
