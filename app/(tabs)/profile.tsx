@@ -1,9 +1,11 @@
-
 import {View, Text, Image, StyleSheet, Button, Pressable} from "react-native";
 import React, {useEffect, useState} from "react";
 import api from "@/interceptor/api";
-import {router} from "expo-router";
+import {router, Stack} from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Colors from "@/constants/Colors";
+import HeaderBack from "@/components/navigation/HeaderBack";
+import HeaderFriend from "@/components/navigation/HeaderFriend";
 
 const Profile = () => {
     const [profile, setProfile] = useState(null);
@@ -33,18 +35,23 @@ const Profile = () => {
     };
 
     return (
-       <View style={styles.container}>
-           <Image style={styles.img} source={{uri: profile?.picture}}></Image>
-           <Text style={styles.name} >{profile?.name}</Text>
-           <Text style={styles.email} >{profile?.email}</Text>
-           <Pressable
-               style={styles.logout}
-               onPress={logout}>
-               <Text style={styles.text}>
-                   Logout
-               </Text>
-           </Pressable>
-       </View>
+        <>
+            <Stack.Screen options={{
+                header: () => <HeaderFriend/>
+            }}/>
+            <View style={styles.container}>
+                <Image style={styles.img} source={{uri: profile?.picture}}></Image>
+                <Text style={styles.name}>{profile?.name}</Text>
+                <Text style={styles.email}>{profile?.email}</Text>
+                <Pressable
+                    style={styles.btn}
+                    onPress={logout}>
+                    <Text style={styles.btn_title}>
+                        Logout
+                    </Text>
+                </Pressable>
+            </View>
+        </>
     );
 }
 
@@ -53,8 +60,11 @@ export default Profile
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: Colors.slate_gray,
+        flexDirection: "column",
+        paddingTop: 150,
+        padding: 40
     },
     img: {
         borderRadius: 35,
@@ -81,5 +91,21 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#FFFFFF'
-    }
+    },
+    btn: {
+        marginTop: 20,
+        justifyContent: "center",
+        backgroundColor: Colors.licorice,
+        paddingVertical: 8,
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        height: 40,
+        width: 150
+    },
+    btn_title: {
+        marginLeft: 5,
+        fontSize: 20,
+        color: Colors.ash_gray,
+        textAlign: "center"
+    },
 });

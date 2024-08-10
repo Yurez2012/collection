@@ -83,10 +83,10 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         paddingHorizontal: 10,
         borderRadius: 10,
-        height: 40
+        height: 35
     },
     btn_title: {
-        fontSize: 20,
+        fontSize: 16,
         color: Colors.ash_gray,
         textAlign: "center"
     },
