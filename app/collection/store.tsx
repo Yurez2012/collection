@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     select: {
         marginBottom: 10,
         borderColor: Colors.licorice,
+        borderBottomWidth: 1,
         backgroundColor: Colors.ash_gray,
         color: Colors.licorice,
         borderRadius: 10
