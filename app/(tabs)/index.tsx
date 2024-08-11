@@ -36,7 +36,7 @@ const Page = () => {
                         <Image
                             style={styles.img}
                             source={{
-                                uri: item?.model?.url,
+                                uri: item.model?.url ? item.model?.url : null,
                             }}
                         />
                         <View style={styles.second}>
