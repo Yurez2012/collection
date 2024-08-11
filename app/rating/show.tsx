@@ -89,7 +89,21 @@ const styles = StyleSheet.create({
     cart: {
         marginBottom: 5,
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        alignItems: "center",
+        shadowColor: Colors.licorice,
+        borderRadius: 13,
+        shadowOpacity: 1,
+        shadowRadius: 7,
+        shadowOffset: {
+            width: 1,
+            height: 4,
+        },
+        paddingRight: 2,
+        paddingLeft: 10,
+        paddingVertical: 2,
+        borderWidth: 1,
+        borderColor: Colors.licorice
     },
     title: {
         fontSize: 16

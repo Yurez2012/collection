@@ -64,7 +64,7 @@ const Page = () => {
                                     width={36}
                                     height={36}
                                     source={{
-                                        uri: item?.user?.url,
+                                        uri: item?.user?.url ? item?.user?.url : null,
                                     }}
                                 />
                             </View>
@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
         height: 300,
         width: 205,
         resizeMode: 'stretch',
+        backgroundColor: Colors.licorice
     },
     user_img: {
         borderRadius: 25,
