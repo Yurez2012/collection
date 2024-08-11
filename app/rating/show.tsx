@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet, ScrollView, TextInput} from "react-native";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Stack, useLocalSearchParams} from 'expo-router';
 import api from "@/interceptor/api";
 import HeaderBack from "@/components/navigation/HeaderBack";
@@ -8,6 +8,7 @@ import Colors from "@/constants/Colors";
 export default function Index() {
     const {id} = useLocalSearchParams();
     const [collections, setCollections] = useState(null);
+    const textInputRefs = useRef([]);
 
     useEffect(() => {
         if (collections === null) {
@@ -26,15 +27,20 @@ export default function Index() {
     };
 
     const saveValue = async (id, value) => {
-        try {
-            const response = await api.put('/rating/' + id, {
-                rating: value
-            });
+        if(value <= 10 || value > 0) {
+            try {
+                const response = await api.put('/rating/' + id, {
+                    rating: value
+                });
 
-            setCollections(response.data.collections)
-        } catch (error) {
-            console.error('Axios error:', error);
+                setCollections(response.data.collections)
+            } catch (error) {
+                console.error('Axios error:', error);
+            }
+
         }
+
+        textInputRefs.current[id].setNativeProps({ text: 0 });
     };
 
     return (
@@ -48,7 +54,14 @@ export default function Index() {
                         <Text style={styles.title}>
                             {item?.model?.title}
                         </Text>
-                        <TextInput keyboardType='numeric' placeholder={`${item.rating}`} placeholderTextColor={Colors.licorice} onChangeText={(value) => saveValue(item.id, value)} style={styles.input} />
+                        <TextInput
+                            key={item.id}
+                            ref={(el) => (textInputRefs.current[item.id] = el)}
+                            keyboardType='numeric'
+                            placeholder={`${item.rating}`}
+                            placeholderTextColor={Colors.licorice}
+                            onChangeText={(value) => saveValue(item.id, value)}
+                            style={styles.input} />
                     </View>) : null
                 }
             </ScrollView>
