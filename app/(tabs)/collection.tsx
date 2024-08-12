@@ -85,7 +85,7 @@ const Collection = () => {
                     <View>
                         <ScrollView onScroll={handleScroll} ref={scrollRef} horizontal={true} style={styles.scrollCustom}
                                     showsHorizontalScrollIndicator={false}>
-                            {item?.collections.map(item => <View style={styles.cart_collection} key={item.model.id}>
+                            {item?.collections ? item?.collections.map(item => <View style={styles.cart_collection} key={item.model.id}>
                                     <Image
                                         style={styles.img}
                                         source={{
@@ -103,7 +103,7 @@ const Collection = () => {
                                         </Text>
                                     </View>
                                 </View>
-                            )}
+                            ) : null}
                         </ScrollView>
                     </View>
                 </ScrollView>) : null}

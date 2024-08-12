@@ -12,7 +12,8 @@ export default function SignIn() {
     const [user, setUser] = useState(null);
 
     const [request, response, promptAsync] = Facebook.useAuthRequest({
-        clientId: config.bf_client_id
+        clientId: config.bf_client_id,
+        scopes: ['public_profile', 'email', 'user_friends'],
     });
 
     useEffect(() => {
@@ -39,6 +40,7 @@ export default function SignIn() {
                 `https://graph.facebook.com/v20.0/me?access_token=${response.authentication?.accessToken}&fields=id,name,picture,email`
             );
             const userInfo = await userInfoResponse.json();
+            await AsyncStorage.setItem('fbToken', response.authentication?.accessToken);
 
             setUser(userInfo);
         } catch (error) {

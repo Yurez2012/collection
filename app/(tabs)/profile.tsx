@@ -27,6 +27,7 @@ const Profile = () => {
     const logout = async () => {
         try {
             await AsyncStorage.removeItem('userToken');
+            await AsyncStorage.removeItem('fbToken');
 
             router.replace('/sign-in');
         } catch (error) {
