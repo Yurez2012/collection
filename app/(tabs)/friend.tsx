@@ -19,7 +19,7 @@ const Friend = () => {
     const getCollections = async () => {
         try {
             const fbToken = await AsyncStorage.getItem('fbToken');
-            const response = await api.get('/friend?fb_token=' + fbToken);
+            const response = await api.get('/friend?token=' + fbToken);
 
             setFriends(response.data.friends)
         } catch (error) {
