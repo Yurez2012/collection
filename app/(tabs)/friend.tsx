@@ -5,6 +5,7 @@ import {Stack} from "expo-router";
 import UserHistory from "@/components/user/UserHistory";
 import HeaderFriend from "@/components/navigation/HeaderFriend";
 import api from "@/interceptor/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Friend = () => {
     const [friends, setFriends] = useState(null);
@@ -17,7 +18,8 @@ const Friend = () => {
 
     const getCollections = async () => {
         try {
-            const response = await api.get('/friend');
+            const fbToken = await AsyncStorage.getItem('fbToken');
+            const response = await api.get('/friend?fb_token=' + fbToken);
 
             setFriends(response.data.friends)
         } catch (error) {
